@@ -8,14 +8,14 @@ ReleaseYear date not null,
 Title nvarchar(100) not null unique,
 MovieDescription nvarchar(500) not null,
 Runtime bigint not null,
-DirectorID bigint foreign key,
+DirectorID bigint foreign key refrences Director(ID),
 );
 
 -- MEDIA TABLE
 create table tblMedia
 (
 MediaID bigint primary key identity(1, 1),
-MovieID bigint foreign key,
+MovieID bigint foreign key refrences tblMovie(MovieID),
 Title nvarchar(100) not null,
 MediaType nvarchar(20) not null,
 MediaURL navchar(200) not null,
@@ -32,16 +32,16 @@ GenreName nvarchar(100) not null
 create table tblMovieGenre
 (
 MovGenreID bigint primary key identity(1, 1),
-MovieID bigint foreign key,
-GenreID bigint foreign key,
+MovieID bigint foreign key refrences tblMovie(MovieID),
+GenreID bigint foreign key refrences tblGenre(GenreID),
 );
 
 -- REVIEWS TABLE
 create table tblReviews
 (
 ReviewID bigint primary key identity(1, 1),
-MovieID bigint foreign key,
-UserID bigint foreign key,
+MovieID bigint foreign key refrences tblMovie(MovieID),
+UserID bigint foreign key refrences tblUser(UserID),
 rating bigint not null,
 Comment nvarchar(100) not null,
 );
@@ -74,8 +74,8 @@ Skill nvarchar(100) not null,
 create table tblArtistSkill
 (
 ID bigint primary key identity(1, 1),
-ArtistID bigint foreign key,
-SkillID bigint foreign key,
+ArtistID bigint foreign key refrences tblArtist(ArtistID),
+SkillID bigint foreign key refrences tblRoles(RoleID),
 );
 
 -- ROLES TABLE
@@ -89,9 +89,9 @@ RoleName nvarchar(100) not null,
 create table tblMovieArtistRole
 (
 ID bigint primary key identity(1, 1),
-MovieID bigint foreign key,
-ArtistID bigint foreign key,
-RoleID bigint foreign key,
+MovieID bigint foreign key refrences tblMovie(MovieID),
+ArtistID bigint foreign key refrences tblArtist(ArtistID),
+RoleID bigint foreign key refrences tblRoles(RoleID)
 );
 
 
